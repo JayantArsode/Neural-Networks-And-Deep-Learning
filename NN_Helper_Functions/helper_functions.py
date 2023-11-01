@@ -57,7 +57,7 @@ def plot_loss_accuracy_curve(history):
     plt.show()  # Display the plot
 
 
-def create_advanced_wandb_callback(project_name, experiment_name, monitor='val_loss', mode='min', save_model=False):
+def create_wandb_callback(project_name, experiment_name, monitor='val_loss', mode='min', save_model=False):
     '''
     Creates and initializes a customized weight and biases Keras callback for experiment tracking.
 
