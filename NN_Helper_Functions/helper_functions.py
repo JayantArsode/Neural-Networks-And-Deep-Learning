@@ -1,5 +1,13 @@
+"""
+This helper function is created so that we can reuse some of functions 
+created for neuarl networks and deep leraning projects.
+Some of the function are:
+1) plot_loss_accuracy_curve
+2) create_wandb_callback
+"""
 import pandas as pd
 import matplotlib.pyplot as plt
+import wandb
 
 
 def plot_loss_accuracy_curve(history):
@@ -47,3 +55,32 @@ def plot_loss_accuracy_curve(history):
                fontdict={'size': 15, 'color': 'red', 'style': 'oblique'})
 
     plt.show()  # Display the plot
+
+
+def create_advanced_wandb_callback(project_name, experiment_name, monitor='val_loss', mode='min', save_model=False):
+    '''
+    Creates and initializes a customized weight and biases Keras callback for experiment tracking.
+
+    Parameters:
+    project_name (str): Name of the Wandb project for experiment tracking.
+    experiment_name (str): Name of the specific experiment.
+    monitor (str): Quantity to monitor. Default is 'val_loss'.
+    mode (str): One of {'auto', 'min', 'max'}. The optimization direction. Default is 'min'.
+    save_model (bool): If True, saves the model within the logged experiment. Default is False.
+
+    Returns:
+    wandb.keras.WandbCallback: Customized Wandb Callback for Keras.
+    '''
+    wandb.init(project=project_name, name=experiment_name)
+    print(
+        f"Logging Wandb experiments with project: {project_name}, name: {experiment_name}")
+
+    # Additional configuration for Wandb callback
+    wandb_callback = wandb.keras.WandbCallback(
+        monitor=monitor,
+        mode=mode,
+        save_model=save_model
+        # Add other parameters as needed (e.g., save_weights_only, log_weights, log_gradients, etc.)
+    )
+
+    return wandb_callback
